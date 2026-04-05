@@ -1,0 +1,25 @@
+# use an official image of node.js runtime
+FROM node:22-alpine
+
+# set working directory inside the container
+WORKDIR /app
+
+# copy all package.json files
+COPY package*.json ./
+
+# install dependencies
+RUN npm install
+
+# copy all files (from current directory INTO the container /app folder aka working directory) and also we want to ignore the node_modules file, this is in the .dockerignore file, and npm-debug.log
+COPY . .
+
+# set environment variable, port=3000
+ENV PORT=3000
+
+# expose port (do we need to expose the port if we have an env file??)
+# EXPOSE 3000
+
+# run app
+CMD ["node", "index.js"]
+# or you can run use 'npm run start' if it is configured
+# CMD ["npm", "run", "start"]
